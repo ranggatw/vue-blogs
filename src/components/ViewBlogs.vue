@@ -3,8 +3,11 @@
     <div class="btns">
       <v-btn v-on:click="wide">Wide</v-btn>
       <v-btn v-on:click="narrow">Narrow</v-btn>
+      <v-pagination v-model="blog" :length="6"></v-pagination>
     </div>
-    <h2>Blog Posts</h2>
+
+
+    <h2 class="titleBlog">Blog Posts</h2>
     <v-card v-for="blog in filteredBlogs" class="single-blog" :key="blog.id">
       <router-link v-bind:to="'/blog/' + blog.id">
         <v-card-title v-ranbow>{{ blog.title }}</v-card-title>
@@ -22,6 +25,9 @@ export default {
       blogs: [],
       search: "",
       themeSize: "narrow",
+      page: 1,
+      pageSize: 10,
+      pages: [],
     };
   },
   methods: {
@@ -36,7 +42,8 @@ export default {
     filteredBlogs() {
       return this.blogs.filter((blog) => {
         return blog.title.match(this.search);
-      });
+      }
+      );
     },
   },
   created() {
@@ -82,6 +89,10 @@ export default {
   padding: 20px 0;
 }
 
+.titleBlog {
+  margin-bottom: 60px;
+}
+
 .single-blog {
   background: #f5f6f7;
   margin: 30px auto 10px;
@@ -89,8 +100,9 @@ export default {
 }
 
 .btns {
+  display: flex;
   position: absolute;
   right: 0;
-  top: 45px;
+  top: 55px;
 }
 </style>
